@@ -40,3 +40,8 @@ func (u *UserTypeExpr) Finalize() {
 		}
 	}
 }
+
+// Example produces an example for the user type which is JSON serialization compatible.
+func (u *UserTypeExpr) Example(r *Random) interface{} {
+	return u.AttributeExpr.Type.Example(r)
+}

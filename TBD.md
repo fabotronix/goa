@@ -6,15 +6,33 @@ Notes of things I know still have to be done. Lots more I don't know about.
 - Add back security
 - Add back CORS
 
+User code:
+func (c * BottleController) Create(ctx context.Context, req *server.BottleCreateRequest) (*server.BottleCreateResponse, error) {
+	resp := server.BottleCreateResponse{
+		Status: http.StatusOK,
+		Location: "/..",
+		MediaType: mt,
+	}
+	// OR
+	resp := server.NewBottleCreateCreatedResponse("/...", mt)
+
+	// rest.ContextRequest(ctx) -> *http.Request
+	// rest.ContextResponse(ctx) -> http.ResponseWriter
+	return &resp, nil
+}
 
 Generated code to be:
 
 app package:
 
     type BottleController interface {
-        Create(ctx context.Context, payload *BottleCreatePayload) (*Bottle, error)
-        Show(ctx context.Context, bottleID int) (*Bottle, error)
-        Rate(ctx context.Context, bottleID int) error
+        Create(ctx *context.Context, request *BottleCreateRequest) (*BottleCreateResponse, error)
+        Show(ctx context.Context, request *BottleShowRequest) (*Bottle, error)
+        Rate(ctx context.Context, request *BottleRateRequest) error
+
+	// If multiple 2xx responses with different media types:
+	Index(ctx context.Context, request *BottleIndexRequest) (interface{}, error)
+	// Use appropriate server.NewXXXResponse
     }
 
     type BottleEndpoints struct {

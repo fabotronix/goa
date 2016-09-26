@@ -8,25 +8,24 @@ import (
 
 const (
 	// Major version number
-	Major = 1
+	Major = 2
 	// Minor version number
 	Minor = 0
 )
 
 var (
 	// Build number
-	Build string
+	Build = "" // Set in version branches
 )
-
-func init() {
-	if Build == "" { // Not set by link flags
-		Build = "0"
-	}
-}
 
 // String returns the complete version number.
 func String() string {
-	return "v" + strconv.Itoa(Major) + "." + strconv.Itoa(Minor) + "." + Build
+	var suffix string
+	if Build == "" {
+		Build = "9999"
+		suffix = "-dev"
+	}
+	return "v" + strconv.Itoa(Major) + "." + strconv.Itoa(Minor) + "." + Build + suffix
 }
 
 // Compatible returns true if Major matches the major version of the given version string.

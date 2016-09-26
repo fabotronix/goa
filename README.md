@@ -29,4 +29,3 @@ This is a work in progress...
 - [ ] Generate go-kit endpoints
 - [ ] Generate service interface
 - [ ] Generate scaffolding main
-
